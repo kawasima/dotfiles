@@ -1,0 +1,39 @@
+-- -*- mode: haskell -*-
+Config { font = "xft:Ricty:size=12"
+       , additionalFonts = ["xft:Ionicons:size=16"]
+       , bgColor = "#212121"
+       , fgColor = "#ecf0f1"
+       , position = TopSize C 100 26
+       , border = NoBorder
+       , lowerOnStart = False
+       , overrideRedirect = False
+       , borderColor = "#26a69a"
+       , commands = [ Run Weather "RJTT" [ "-t", "<action=`chromium --app=http://tokyo-ame.jwa.or.jp`><fc=#e74c3c><skyCondition> <tempC>℃</fc></action>" ] 36000
+                    , Run Cpu [ "--template", "<fc=#f4bf75><fn=1>\xf2b3</fn> <total>%</fc>"
+                                   , "--Low",  "50"
+                                   , "--High", "85"
+                                   ] 60
+                    , Run Memory   [ "--template", "<fc=#f4bf75><used>Mb/<total>Mb</fc>"
+                                   ] 60
+                    , Run Wireless "wlp1s0"
+                                  [ "--template", "<fc=#6a9fb5><fn=1>\xf25c</fn> <essid></fc>"] 15
+                    , Run BatteryP   ["BAT1"]
+                                     [ "-t",      "<acstatus>"
+                                     , "-L",      "20"
+                                     , "-H",      "80"
+                                     , "--low",   "#f443c6"
+                                     , "--normal",   "#ffffff"
+                                     , "--"
+                                           , "-o", "<fc=#d28445><fn=1>\xf114</fn> <left>% (<timeleft>)</fc>"
+                                           , "-O", "<fc=#2eec71><fn=1>\xf111</fn>Charging <left></fc>%"
+                                           , "-i", "<fc=#2eec71><fn=1>\xf111</fn></fc>"
+                                     ] 50
+                    , Run Brightness [ "--template" ,"<fc=#f1c40f><fn=1>\xf3b0</fn> <percent>%</fc>", "--"
+                                     , "-D" , "intel_backlight"] 60
+                    , Run Date "%a %m/%d %H:%M" "date" 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader% }{ %RJTT% %cpu% %memory% %wlp1s0wi% %bright% %battery% %date%" }
+

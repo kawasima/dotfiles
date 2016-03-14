@@ -1,0 +1,11 @@
+*~
+.lein/repl-history
+.lein/repl-port
+.lein/self-installs
+.emacs.d/ac-comphist.dat
+.emacs.d/ede-projects.el
+.emacs.d/elpa/
+.emacs.d/kkcrc
+.emacs.d/recentf
+.emacs.d/semanticdb/
+.emacs.d/tramp

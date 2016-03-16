@@ -1,0 +1,10 @@
+[user]
+	email = kawasima1016@gmail.com
+	name = kawasima
+[push]
+	default = matching
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+

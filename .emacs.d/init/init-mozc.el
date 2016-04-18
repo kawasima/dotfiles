@@ -1,4 +1,5 @@
-(when (require 'mozc nil t)
+(use-package mozc
+  :config
   (setq default-input-method "japanese-mozc")
   (setq mozc-candidate-style 'overlay)
   (set-face-attribute 'mozc-cand-overlay-even-face 'nil

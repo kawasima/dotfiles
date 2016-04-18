@@ -7,5 +7,5 @@
                   [lein-pprint "1.1.2"]]}
  :repl
  {:plugins [[cider/cider-nrepl "0.11.0"]
-            [rfactor-nrepl "2.0.0"]]
+            [refactor-nrepl "2.2.0"]]
   :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}

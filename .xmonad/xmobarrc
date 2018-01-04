@@ -3,10 +3,18 @@ Config { font = "xft:Ricty:size=12"
        , additionalFonts = ["xft:Ionicons:size=16"]
        , bgColor = "#212121"
        , fgColor = "#ecf0f1"
+       , alpha = 128
        , position = TopSize C 100 26
        , border = NoBorder
        , lowerOnStart = False
+       , hideOnStart = False
+       , allDesktops = False
        , overrideRedirect = False
+       , textOffset = 14
+       , iconOffset = -1
+       , iconRoot = "."
+       , pickBroadest = False
+       , persistent = False
        , borderColor = "#26a69a"
        , commands = [ Run Weather "RJTT" [ "-t", "<action=`chromium --app=http://tokyo-ame.jwa.or.jp`><fc=#e74c3c><skyCondition> <tempC>℃</fc></action>" ] 36000
                     , Run Cpu [ "--template", "<fc=#f4bf75><fn=1>\xf2b3</fn> <total>%</fc>"

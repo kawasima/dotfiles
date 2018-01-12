@@ -9,4 +9,5 @@
 .emacs.d/recentf
 .emacs.d/semanticdb/
 .emacs.d/tramp
+.emacs.d/init/init-proxy.el
 \#*

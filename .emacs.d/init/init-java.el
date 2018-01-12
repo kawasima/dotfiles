@@ -1,5 +1,5 @@
 ;;; CEDET
-(require 'cedet)
+(use-package cedet)
 (global-ede-mode t)
 (setq semantic-default-submodes
   '(global-semantic-ide-scheduler-mode

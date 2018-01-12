@@ -1,19 +1,15 @@
 ;;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
-(defun yas/advise-indent-function (function-symbol)
-  (eval `(defadvice ,function-symbol (around yas/try-expand-first activate)
-	   ,(format
-	      "Try to expand a snippet before point, then call `%s' as usual"
-	      function-symbol)
-	   (let ((yas/fallback-behavior nil))
-	     (unless (and (interactive-p)
-		       (yas/expand))
-	       ad-do-it)))))
-
-(define-key yas-minor-mode-map (kbd "C-x i i") 'yas-insert-snippet)
-(define-key yas-minor-mode-map (kbd "C-x i n") 'yas-new-snippet)
-(define-key yas-minor-mode-map (kbd "C-x i v") 'yas-visit-snippet-file)
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :bind (:map yas-minor-mode-map
+	      ("C-x i i" . yas-insert-snippet)
+	      ("C-x i n" . yas-new-snnipet)
+	      ("C-x i v" . yas-visit-snnipet-file)
+	      ("C-x i l" . yas-describe-tables)
+	      ("C-x i g" . yas-reload-all))
+  :config (yas-global-mode 1)
+  (setq yas-prompt-functions '(yas-ido-prompt)))
 
 (provide 'init-yasnippet)
 

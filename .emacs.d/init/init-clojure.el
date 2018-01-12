@@ -1,5 +1,10 @@
 ;;; Clojure mode
 (use-package clojure-mode
+  :ensure t
+  :mode (("\\.edn$" . clojure-mode)
+	 ("\\.cljs$" . clojurescript-mode)
+	 ("\\.cljx$" . clojurex-mode)
+	 ("\\.cljc$" . clojurec-mode))
   :init
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
@@ -37,6 +42,7 @@
 
 ;; CIDER
 (use-package cider
+  :ensure t
   :init
   (add-hook 'cider-mode-hook #'clj-refactor-mode)
   (add-hook 'cider-mode-hook #'company-mode)
@@ -52,9 +58,6 @@
         cider-font-lock-dynamically '(macro core function var)
         cider-overlays-use-font-lock t)
   (cider-repl-toggle-pretty-printing))
-
-;;; Clojurescript
-(use-package clojurescript-mode)
 
 (provide 'init-clojure)
 

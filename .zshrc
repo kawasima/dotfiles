@@ -12,13 +12,13 @@ HISTIGNORE="ls:pwd"
 
 # Path to my zplug installation.
 export ZPLUG_HOME=/home/kawasima/.zplug
+unset ZPLUG_SHALLOW
 source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "peco/peco"
 
 zplug "chrissicool/zsh-256color"
 

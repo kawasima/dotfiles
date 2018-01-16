@@ -20,7 +20,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default)))
+    ("e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default)))
  '(global-linum-mode t)
  '(js-indent-level 2)
  '(package-selected-packages

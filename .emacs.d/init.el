@@ -21,21 +21,32 @@
  '(custom-safe-themes
    (quote
     ("e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default)))
- '(global-linum-mode t)
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
     (helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
-(setq linum-format "%4d\u2502")
-(set-face-attribute 'linum nil
-  :foreground "#4a4"
-  :height 1.0)
-(line-number-mode t)
-(column-number-mode t)
 
 ;; Package
 (require 'init-package)
+
+(use-package no-littering :ensure t)
+(use-package linum-off :ensure t)
+(use-package nlinum :ensure t :after linum-off
+  :config
+  (advice-add 'nlinum-mode :around
+              (lambda (orig-f &rest args)
+                (unless (or (minibufferp)
+                            (or
+                             (eq major-mode 'treemacs-mode)
+                             (memq major-mode linum-disabled-modes-list))
+                            (string-match "*" (buffer-name)))
+                  (apply orig-f args))))
+  (custom-set-faces '(linum ((t :height 0.9))))
+  (global-nlinum-mode))
+
+(column-number-mode t)
+
 (require 'init-locales)
 (require 'init-mozc)
 
@@ -85,6 +96,8 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
+(require 'init-diminish)
+(require 'init-neotree)
 (require 'init-helm)
 
 
@@ -94,7 +107,8 @@
 (require 'init-autocomplete)
 (require 'init-yasnippet)
 (require 'init-paredit)
-;(require 'magit)
+(use-package magit
+  :ensure t)
 
 ;;;
 ;;; Major mode
@@ -105,6 +119,18 @@
 ;(require 'init-java)
 (require 'init-haml)
 (require 'init-markdown)
+
+;;; Image
+(use-package image+
+  :ensure t
+  :after 'image-mode
+  :init (add-hook 'image-mode-hook '(lambda () (require 'image+)))
+  :config (bind-keys :map image-mode-map
+             ("0" . imagex-sticky-restore-original)
+             ("+" . imagex-sticky-maximize)
+             ("=" . imagex-sticky-zoom-in)
+             ("-" . imagex-sticky-zoom-out)))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

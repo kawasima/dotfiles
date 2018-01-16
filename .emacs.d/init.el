@@ -25,7 +25,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+    (helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
 (setq linum-format "%4d\u2502")
 (set-face-attribute 'linum nil
@@ -64,6 +64,15 @@
 
 ;;; Indent settings
 (setq-default indent-tabs-mode nil)
+
+;; yes or no -> y or n
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; follow symlinks
+(setq vc-follow-symlinks t)
+
+;; Reload updated file automatically
+(global-auto-revert-mode 1)
 
 ;;; paren mode
 (show-paren-mode 1)

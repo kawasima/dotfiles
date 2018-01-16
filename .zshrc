@@ -4,6 +4,9 @@ export HISTSIZE=10000
 export SAVE_HIST=100000
 export HISTFILE=${HOME}/.zsh_history
 
+# aliases
+alias ls="ls --color=auto -F"
+
 # ignore
 HISTIGNORE="ls:pwd"
 
@@ -29,5 +32,30 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/u
 
 zplug load
 
-#source ~/.bin/tmuxinator.zsh
+# fzf
+function select-history() {
+    BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History> ")
+    CURSOR=$#BUFFER
+}
+zle -N select-history
+bindkey '^r' select-history
 
+# fd - cd to selected directory
+function fd() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.*' -prune \
+               -o -type d -print 2> /dev/null | fzf +m) && \
+        cd "$dir"
+}
+
+
+# fkill - kill process
+function fkill() {
+    local pid
+    pid = $(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+    if [ "x$pid" != "x" ]; then
+        echo $pid | xargs kill -${1:-9}
+    fi
+}
+#source ~/.bin/tmuxinator.zsh

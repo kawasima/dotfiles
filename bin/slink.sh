@@ -1,7 +1,16 @@
-dotfiles=".zshrc .tmux.conf .gitconfig .emacs.d/init .emacs.d/init.el .xmonad/xmobarrc .xmonad/xmonad.hs"
+#!/bin/sh
 
-for dotfile in $dotfiles
+dotfiles=(.zshrc .tmux.conf .gitconfig
+          .Xresources
+          .eslintrc
+          .emacs.d/init .emacs.d/init.el
+          .xmonad/xmobarrc .xmonad/xmonad.hs)
+
+for dotfile in ${dotfiles[@]}
 do
-    ln -s "$HOME/dotfiles/$dotfile" $HOME/$dotfile
+    echo $dotfile
+    if [ ! -L $HOME/$dotfile ]; then
+        ln -s "$HOME/dotfiles/$dotfile" $HOME/$dotfile
+        echo "Create $dotfile"
+    fi
 done
-

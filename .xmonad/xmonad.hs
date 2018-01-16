@@ -13,6 +13,7 @@ import qualified XMonad.Actions.FlexibleResize as Flex  -- Resize floating windo
 import XMonad.Hooks.DynamicLog         -- for xmobar
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
+import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks        -- avoid xmobar area
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
@@ -100,7 +101,7 @@ myShowWName = showWName' defaultSWNConfig
         , swn_fade = 0.5 }
 
 myStartupHook = do
-        spawn "feh --bg-fill '/home/kawasima/Pictures/1880733.jpg'"
+        setWMName "LG3D"
 
 myManageHook = composeAll
              [ className =? "Gimp"          --> doFloat

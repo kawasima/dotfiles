@@ -1,6 +1,6 @@
 (set-language-environment "Japanese")
-(require 'ucs-normalize)
-(prefer-coding-system 'utf-8)
+(use-package ucs-normalize
+  :config
+  (prefer-coding-system 'utf-8))
 
 (provide 'init-locales)
-

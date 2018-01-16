@@ -16,8 +16,7 @@ Config { font = "xft:Ricty:size=12"
        , pickBroadest = False
        , persistent = False
        , borderColor = "#26a69a"
-       , commands = [ Run Weather "RJTT" [ "-t", "<action=`chromium --app=http://tokyo-ame.jwa.or.jp`><fc=#e74c3c><skyCondition> <tempC>℃</fc></action>" ] 36000
-                    , Run Cpu [ "--template", "<fc=#f4bf75><fn=1>\xf2b3</fn> <total>%</fc>"
+       , commands = [ Run Cpu [ "--template", "<fc=#f4bf75><fn=1>\xf2b3</fn> <total>%</fc>"
                                    , "--Low",  "50"
                                    , "--High", "85"
                                    ] 60

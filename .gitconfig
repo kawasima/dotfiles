@@ -8,3 +8,8 @@
 	ci = commit
 	co = checkout
 
+[include]
+	path = .gitconfig.proxy
+
+[url "https://"]
+	instedOf = git://

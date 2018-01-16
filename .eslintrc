@@ -1,0 +1,31 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "sourceType": "module"
+  },
+  "env" : {
+    "es6": true
+  },
+  "plugins": [
+    "react",
+    "flowtype"
+  ],
+  "rules": {
+    "strict": 0,
+    "no-throw-literal": 1,
+    "quotes": [1, "single"],
+    "react/no-multi-comp": 1,
+    "react/prop-types": 1,
+    "react/display-name": 1,
+    "react/self-closing-comp": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 1
+  }
+}

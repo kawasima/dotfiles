@@ -30,7 +30,7 @@ URxvt.scrollBar: false
 URxvt.fading: 40
 URxvt.pointerBlank: true
 
-URxvt*font: xft:Ricty:size=9:antialias=true,xft:Symbola
+URxvt*font: xft:Ricty:size=10:antialias=true,xft:Symbola
 !URxvt*letterSpace: -2
 
 ! japanese

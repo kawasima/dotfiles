@@ -1,4 +1,7 @@
+;;; init.el --- Emacs configuration
 
+;;; Commentary:
+;;; Code:
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -24,7 +27,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+    (ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
 
 ;; Package
@@ -86,7 +89,7 @@
 (global-auto-revert-mode 1)
 
 ;;; paren mode
-(show-paren-mode 1)
+(show-paren-mode t)
 (setq show-paren-style 'mixed)
 (set-face-attribute 'show-paren-match-face nil
   :background "gray10" :foreground "SkyBlue"
@@ -113,6 +116,7 @@
 ;;;
 ;;; Major mode
 ;;;
+(require 'init-web)
 (require 'init-javascript)
 (require 'init-ruby)
 (require 'init-clojure)
@@ -136,4 +140,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(linum ((t :height 0.9))))
+;;; init.el ends here

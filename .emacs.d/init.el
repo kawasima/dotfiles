@@ -27,7 +27,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+    (image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
 
 ;; Package
@@ -88,6 +88,14 @@
 ;; Reload updated file automatically
 (global-auto-revert-mode 1)
 
+;;; Recentf
+(use-package recentf
+  :config
+  (setq recentf-max-saved-items 1000
+        recentf-max-menu-items 15
+        recentf-auto-cleanup 'never)
+  (recentf-mode +1))
+
 ;;; paren mode
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
@@ -104,15 +112,6 @@
 (require 'init-helm)
 
 
-;;; Minor mode
-;;;
-(require 'init-flymake)
-(require 'init-autocomplete)
-(require 'init-yasnippet)
-(require 'init-paredit)
-(use-package magit
-  :ensure t)
-
 ;;;
 ;;; Major mode
 ;;;
@@ -123,6 +122,15 @@
 ;(require 'init-java)
 (require 'init-haml)
 (require 'init-markdown)
+
+;;; Minor mode
+;;;
+(require 'init-flymake)
+(require 'init-autocomplete)
+(require 'init-yasnippet)
+(require 'init-paredit)
+(use-package magit
+  :ensure t)
 
 ;;; Image
 (use-package image+

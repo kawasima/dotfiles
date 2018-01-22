@@ -1,8 +1,13 @@
+;;; init-helm.el --- Configuration for helm
+
+;;; Commentary:
+;;; Code:
 (use-package helm
   :ensure t
   :bind (("M-x" . helm-M-x)
          ("C-x b" . helm-mini)
          ("C-x C-f" . helm-find-files)
+         ("C-x f" . helm-recentf)
          ("C-c y" . helm-show-kill-ring)
          ("C-c m" . helm-man-woman)
          ("C-c o" . helm-occur)
@@ -15,7 +20,9 @@
          :map helm-find-files-map
          ("TAB" . helm-execute-persistent-action))
   :config
-  (helm-mode 1))
+  (progn
+    (setq helm-bufferes-fuzzy-matching t)
+    (helm-mode 1)))
 
 (use-package helm-flx
   :ensure t
@@ -29,3 +36,4 @@
   (helm-descbinds-mode))
 
 (provide 'init-helm)
+;;; init-helm.el ends here

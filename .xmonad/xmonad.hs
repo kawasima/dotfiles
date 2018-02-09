@@ -13,6 +13,7 @@ import qualified XMonad.Actions.FlexibleResize as Flex  -- Resize floating windo
 import XMonad.Hooks.DynamicLog         -- for xmobar
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks        -- avoid xmobar area
 import XMonad.Hooks.ManageHelpers
@@ -90,9 +91,9 @@ main = do
        , ((0, xF86XK_AudioMute),        spawn "amixer set Master toggle")
        ]
 
-myLayout = (spacing 12 $ ResizableTall 1 (1/100) (1/2) [])
-             |||  (spacing 12 $ ThreeCol 1 (1/100) (16/35))
-             |||  (spacing 12 $ ResizableTall 2 (1/100) (1/2) [])
+myLayout = (spacing 6 $ ResizableTall 1 (1/100) (1/2) [])
+             |||  (spacing 6 $ ThreeCol 1 (1/100) (16/35))
+             |||  (spacing 6 $ ResizableTall 2 (1/100) (1/2) [])
 
 myShowWName = showWName' defaultSWNConfig
         { swn_color = colorfg
@@ -107,7 +108,11 @@ myManageHook = composeAll
              [ className =? "Gimp"          --> doFloat
              , className =? "Civ5XP"        --> doFullFloat
              ]
-myLogHook h = ewmhDesktopsLogHook <+> (dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h })
+
+myFadeInactiveLogHook = fadeInactiveLogHook fadeAmount
+                        where fadeAmount = 0.8
+
+myLogHook h = ewmhDesktopsLogHook <+> myFadeInactiveLogHook <+> (dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h })
 
 myWsBar = "xmobar /home/kawasima/.xmonad/xmobarrc"
 
@@ -122,4 +127,3 @@ wsPP = xmobarPP { ppOrder           = \(ws:l:t:_)  -> [ws,t]
                 , ppWsSep           = ""
                 , ppSep             = " : "
                 }
-

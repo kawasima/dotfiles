@@ -27,7 +27,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+    (speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
 
 ;; Package
@@ -103,6 +103,9 @@
   :background "gray10" :foreground "SkyBlue"
   :underline nil)
 
+;;;
+(use-package speed-type :ensure t)
+
 ;;; Buffer name
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
@@ -122,6 +125,9 @@
 ;(require 'init-java)
 (require 'init-haml)
 (require 'init-markdown)
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.ya?ml\\'")
 
 ;;; Minor mode
 ;;;

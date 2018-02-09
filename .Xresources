@@ -27,12 +27,18 @@ URxvt*.depth: 32
 
 URxvt.saveLines: 32767
 URxvt.scrollBar: false
-URxvt.fading: 40
 URxvt.pointerBlank: true
 
 URxvt*font: xft:Ricty:size=10:antialias=true,xft:Symbola
 !URxvt*letterSpace: -2
 
-! japanese
-URxvt*preeditType: OnTheSpot
-URxvt*perl-ext: xim-onthespot
+! Perl Extensions
+URxvt.perl-ext-common: resize-font,xim-onthespot,selection-to-clipboard
+
+! font-size
+URxvt.resize-font.smaller: C-Down
+URxvt.resize-font.bigger: C-Up
+
+! Inline input
+URxvt.preeditType: OnTheSpot
+URxvt.inputMethod: fcitx

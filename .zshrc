@@ -9,6 +9,7 @@ alias ls="ls --color=auto -F"
 
 # ignore
 HISTIGNORE="ls:pwd"
+
 # Path to my zplug installation.
 export ZPLUG_HOME=/home/kawasima/.zplug
 unset ZPLUG_SHALLOW
@@ -27,7 +28,7 @@ zplug "modules/tmux", from:prezto
 
 zstyle ':prezto:module:prompt' theme 'sorin'
 zstyle ':prezto:module:syntax-highlighting' color 'yes'
-zstyle ':prezto:module:tmux:auto-start' local 'yes'
+#zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 
@@ -35,7 +36,7 @@ zplug load
 
 # fzf
 function select-history() {
-    BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History> ")
+    BUFFER=$(history -n -r 1 | fzf-tmux --no-sort +m --query "$LBUFFER" --prompt="History> ")
     CURSOR=$#BUFFER
 }
 zle -N select-history
@@ -45,7 +46,7 @@ bindkey '^r' select-history
 function fd() {
     local dir
     dir=$(find ${1:-.} -path '*/\.*' -prune \
-               -o -type d -print 2> /dev/null | fzf +m) && \
+               -o -type d -print 2> /dev/null | fzf-tmux +m) && \
         cd "$dir"
 }
 
@@ -53,7 +54,7 @@ function fd() {
 # fkill - kill process
 function fkill() {
     local pid
-    pid = $(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    pid=$(ps -ef | sed 1d | fzf-tmux -m | awk '{print $2}')
 
     if [ "x$pid" != "x" ]; then
         echo $pid | xargs kill -${1:-9}

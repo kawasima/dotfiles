@@ -128,6 +128,9 @@
 (use-package yaml-mode
   :ensure t
   :mode "\\.ya?ml\\'")
+(use-package dockerfile-mode
+  :ensure t
+  :mode "Dockerfile\\'")
 
 ;;; Minor mode
 ;;;

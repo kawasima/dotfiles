@@ -1,0 +1,20 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: storybook
+# key: storybook
+# binding: direct-keybinding
+# --
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import styled from 'styled-components'
+
+import $1 from './'
+
+const Wrapper = styled.div\`
+\`
+
+storiesOf('$2|$1', module)
+  .add('default', () => (
+    <Wrapper>
+      <$1 />
+    </Wrapper>
+  ))

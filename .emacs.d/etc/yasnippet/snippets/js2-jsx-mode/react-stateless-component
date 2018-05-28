@@ -1,0 +1,22 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: react-stateless-component
+# key: react
+# binding: direct-keybinding
+# --
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+const Wrapper = styled.div\`
+\`
+
+const $1 = (props) => (
+  <Wrapper>
+    $0
+  </Wrapper>
+)
+
+$1.propTypes = {
+}
+
+export default $1

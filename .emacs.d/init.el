@@ -128,6 +128,7 @@
 (use-package yaml-mode
   :ensure t
   :mode "\\.ya?ml\\'")
+(require 'init-org)
 
 ;;; Minor mode
 ;;;

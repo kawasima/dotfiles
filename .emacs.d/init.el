@@ -129,6 +129,9 @@
   :ensure t
   :mode "\\.ya?ml\\'")
 (require 'init-org)
+(use-package dockerfile-mode
+  :ensure t
+  :mode "Dockerfile\\'")
 
 ;;; Minor mode
 ;;;

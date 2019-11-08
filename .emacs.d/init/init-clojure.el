@@ -44,7 +44,7 @@
 ;; CIDER
 (use-package cider
   :ensure t
-  :commands (cider-mode cider-jack-in)
+;;  :commands (cider-mode cider-jack-in)
   :init
   (add-hook 'cider-mode-hook #'clj-refactor-mode)
   (add-hook 'cider-mode-hook #'company-mode)

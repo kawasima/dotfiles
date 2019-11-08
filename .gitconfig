@@ -13,3 +13,5 @@
 
 [url "https://"]
 	instedOf = git://
+[credential]
+	helper = /usr/share/git/credential/netrc/git-credential-netrc

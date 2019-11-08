@@ -16,31 +16,30 @@ Config { font = "xft:Ricty:size=12"
        , pickBroadest = False
        , persistent = False
        , borderColor = "#26a69a"
-       , commands = [ Run Cpu [ "--template", "<fc=#f4bf75><fn=1>\xf2b3</fn> <total>%</fc>"
+       , commands = [ Run Cpu [ "--template", "<fc=#f4bf75><fn=1>\xf4b0</fn> <total>%</fc>"
                                    , "--Low",  "50"
                                    , "--High", "85"
                                    ] 60
-                    , Run Memory   [ "--template", "<fc=#f4bf75><used>Mb/<total>Mb</fc>"
+                    , Run Memory   [ "--template", "<fc=#f4bf75><used>m/<total>m</fc>"
                                    ] 60
-                    , Run Wireless "wlp1s0"
-                                  [ "--template", "<fc=#6a9fb5><fn=1>\xf25c</fn> <essid></fc>"] 15
-                    , Run BatteryP   ["BAT1"]
+                    , Run Wireless "wlp2s0"
+                                  [ "--template", "<fc=#6a9fb5><fn=1>\xf26d</fn> <essid></fc>"] 15
+                    , Run BatteryP   ["BAT0"]
                                      [ "-t",      "<acstatus>"
                                      , "-L",      "20"
                                      , "-H",      "80"
                                      , "--low",   "#f443c6"
                                      , "--normal",   "#ffffff"
                                      , "--"
-                                           , "-o", "<fc=#d28445><fn=1>\xf114</fn> <left>% (<timeleft>)</fc>"
-                                           , "-O", "<fc=#2eec71><fn=1>\xf111</fn>Charging <left></fc>%"
-                                           , "-i", "<fc=#2eec71><fn=1>\xf111</fn></fc>"
+                                           , "-o", "<fc=#d28445><fn=1>\xf122</fn> <left>% (<timeleft>)</fc>"
+                                           , "-O", "<fc=#2eec71><fn=1>\xf120</fn>Charging <left></fc>%"
+                                           , "-i", "<fc=#2eec71><fn=1>\xf120</fn></fc>"
                                      ] 50
-                    , Run Brightness [ "--template" ,"<fc=#f1c40f><fn=1>\xf3b0</fn> <percent>%</fc>", "--"
+                    , Run Brightness [ "--template" ,"<fc=#f1c40f><fn=1>\xf388</fn> <percent>%</fc>", "--"
                                      , "-D" , "intel_backlight"] 60
                     , Run Date "%a %m/%d %H:%M" "date" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %StdinReader% }{ %RJTT% %cpu% %memory% %wlp1s0wi% %bright% %battery% %date%" }
-
+       , template = " %StdinReader% }{ %cpu% %memory% %wlp2s0wi% %bright% %battery% %date%" }

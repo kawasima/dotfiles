@@ -7,7 +7,8 @@
 (use-package web-mode
   :ensure t
   :mode (("\\.html\\'" . web-mode)
-         ("\\.ftl\\'" . web-mode))
+         ("\\.ftl\\'"  . web-mode)
+         ("\\.tsx\\'"  . web-mode))
   :init (progn
           (setq web-mode-enable-auto-pairing nil)))
 

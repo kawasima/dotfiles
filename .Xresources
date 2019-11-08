@@ -29,7 +29,7 @@ URxvt.saveLines: 32767
 URxvt.scrollBar: false
 URxvt.pointerBlank: true
 
-URxvt*font: xft:Ricty:size=10:antialias=true,xft:Symbola
+URxvt*font: xft:Ricty:size=12:antialias=true,xft:Symbola
 !URxvt*letterSpace: -2
 
 ! Perl Extensions

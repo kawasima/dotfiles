@@ -83,7 +83,7 @@ main = do
        , ((modm, xK_Left),  prevWS)
        , ((modm, xK_w),  nextScreen)
        , ((modm, xK_f), sendMessage ToggleLayout)
-       , ((modm, xK_s), spawn "sudo pm-suspend")
+       , ((modm, xK_s), spawn "systemctl suspend")
        , ((0, xF86XK_MonBrightnessUp), spawn "xbacklight + 10 -time 100 -steps 5")
        , ((0, xF86XK_MonBrightnessDown), spawn "xbacklight - 10 -time 100 -steps 5")
        , ((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 10%-")
@@ -106,6 +106,8 @@ myStartupHook = do
 
 myManageHook = composeAll
              [ className =? "Gimp"          --> doFloat
+             , className =? "VirtualBox"    --> doFloat
+             , className =? "MPlayer"       --> doFloat
              , className =? "Civ5XP"        --> doFullFloat
              ]
 

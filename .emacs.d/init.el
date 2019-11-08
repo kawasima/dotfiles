@@ -23,11 +23,11 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default)))
+    ("ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default)))
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+    (docker-compose-mode presentation presentation-mode company-go company flycheck org-bullets yaml-mode speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
 
 ;; Package
@@ -99,7 +99,7 @@
 ;;; paren mode
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
-(set-face-attribute 'show-paren-match-face nil
+(set-face-attribute 'show-paren-match nil
   :background "gray10" :foreground "SkyBlue"
   :underline nil)
 
@@ -113,7 +113,7 @@
 (require 'init-diminish)
 (require 'init-neotree)
 (require 'init-helm)
-
+(require 'init-presentation)
 
 ;;;
 ;;; Major mode
@@ -122,6 +122,8 @@
 (require 'init-javascript)
 (require 'init-ruby)
 (require 'init-clojure)
+(require 'init-golang)
+(require 'init-elm)
 ;(require 'init-java)
 (require 'init-haml)
 (require 'init-markdown)
@@ -129,9 +131,7 @@
   :ensure t
   :mode "\\.ya?ml\\'")
 (require 'init-org)
-(use-package dockerfile-mode
-  :ensure t
-  :mode "Dockerfile\\'")
+(require 'init-docker)
 
 ;;; Minor mode
 ;;;
@@ -152,6 +152,16 @@
              ("+" . imagex-sticky-maximize)
              ("=" . imagex-sticky-zoom-in)
              ("-" . imagex-sticky-zoom-out)))
+
+;;; Terraform
+(use-package terraform-mode
+  :ensure t
+  :mode (("\\.tf\\'" . terraform-mode))
+  )
+
+;; Keybind
+(bind-key "<next>" #'scroll-up-line)
+(bind-key "<prior>" #'scroll-down-line)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

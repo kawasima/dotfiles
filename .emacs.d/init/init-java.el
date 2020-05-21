@@ -15,4 +15,3 @@
   (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode)))
 
 (provide 'init-java)
-

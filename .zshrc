@@ -1,5 +1,4 @@
-bindkey -e
-
+umask 022
 export HISTSIZE=10000
 export SAVE_HIST=100000
 export HISTFILE=${HOME}/.zsh_history
@@ -7,13 +6,27 @@ export HISTFILE=${HOME}/.zsh_history
 # aliases
 alias ls="ls --color=auto -F"
 
+
+# for WSL
+if [[ -a /proc/sys/fs/binfmt_misc/WSLInterop ]]
+then
+    setopt NO_BG_NICE
+fi
+
 # ignore
 HISTIGNORE="ls:pwd"
+export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl":/bin
 
 # Path to my zplug installation.
-export ZPLUG_HOME=/home/kawasima/.zplug
+export ZPLUG_HOME=~/.zplug
 unset ZPLUG_SHALLOW
-source $ZPLUG_HOME/init.zsh
+if [[ -a "$ZPLUG_HOME/init.zsh" ]]
+then
+    source $ZPLUG_HOME/init.zsh
+else
+    source /usr/share/zplug/init.zsh
+fi
+
 
 zplug "modules/autosuggestions", from:prezto
 zplug "modules/completion", from:prezto
@@ -30,7 +43,6 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 zstyle ':prezto:module:syntax-highlighting' color 'yes'
 #zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 
 zplug load
 
@@ -60,4 +72,13 @@ function fkill() {
         echo $pid | xargs kill -${1:-9}
     fi
 }
-#source ~/.bin/tmuxinator.zsh
+
+# NVM
+if [[ -a "$HOME/.nvm/nvm.sh" ]]
+then
+    source $HOME/.nvm/nvm.sh
+fi
+
+# SDKMAN
+export SDKMAN_DIR="/home/kawasima/.sdkman"
+[[ -s "/home/kawasima/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kawasima/.sdkman/bin/sdkman-init.sh"

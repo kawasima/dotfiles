@@ -27,7 +27,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (docker-compose-mode presentation presentation-mode company-go company flycheck org-bullets yaml-mode speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+    (graphql-mode tide docker-compose-mode presentation presentation-mode company-go company flycheck org-bullets yaml-mode speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
  '(yas-trigger-key "TAB"))
 
 ;; Package
@@ -124,6 +124,7 @@
 (require 'init-clojure)
 (require 'init-golang)
 (require 'init-elm)
+(require 'init-fsharp)
 ;(require 'init-java)
 (require 'init-haml)
 (require 'init-markdown)

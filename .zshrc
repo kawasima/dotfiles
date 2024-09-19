@@ -15,7 +15,7 @@ fi
 
 # ignore
 HISTIGNORE="ls:pwd"
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl":/bin
+export PATH="$HOME/bin:$HOME/.nodebrew/current/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl":/bin
 
 # Path to my zplug installation.
 export ZPLUG_HOME=~/.zplug
@@ -24,7 +24,7 @@ if [[ -a "$ZPLUG_HOME/init.zsh" ]]
 then
     source $ZPLUG_HOME/init.zsh
 else
-    source /usr/share/zplug/init.zsh
+    source /opt/homebrew/opt/zplug/init.zsh
 fi
 
 

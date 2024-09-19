@@ -13,7 +13,8 @@
 (load "init-proxy" t)
 
 (display-time)
-(tool-bar-mode 0)
+(if (window-system)
+    (tool-bar-mode 0))
 (unless (window-system)
   (menu-bar-mode 0))
 (custom-set-variables
@@ -22,12 +23,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("76c5b2592c62f6b48923c00f97f74bcb7ddb741618283bdb2be35f3c0e1030e3" "ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default)))
+   '("dea4b7d43d646aa06a4f705a58f874ec706f896c25993fcf73de406e27dc65ba" "76c5b2592c62f6b48923c00f97f74bcb7ddb741618283bdb2be35f3c0e1030e3" "ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default))
  '(js-indent-level 2)
  '(package-selected-packages
-   (quote
-    (groovy-mode terraform-mode elm-mode graphql-mode tide docker-compose-mode presentation presentation-mode company-go company flycheck org-bullets yaml-mode speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider)))
+   '(flycheck-rust rust-mode fsharp-mode groovy-mode terraform-mode elm-mode graphql-mode tide docker-compose-mode presentation presentation-mode company-go company flycheck org-bullets yaml-mode speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider))
  '(yas-trigger-key "TAB"))
 
 ;; Package
@@ -123,6 +122,7 @@
 (require 'init-ruby)
 (require 'init-clojure)
 (require 'init-golang)
+(require 'init-rust)
 (require 'init-elm)
 (require 'init-fsharp)
 ;(require 'init-java)

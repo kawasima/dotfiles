@@ -82,3 +82,6 @@ fi
 # SDKMAN
 export SDKMAN_DIR="/home/kawasima/.sdkman"
 [[ -s "/home/kawasima/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kawasima/.sdkman/bin/sdkman-init.sh"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/kawasima/.lmstudio/bin"

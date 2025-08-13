@@ -1,174 +1,198 @@
 ;;; init.el --- Emacs configuration
 
 ;;; Commentary:
-;;; Code:
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
+;; Main Emacs configuration file
+;; Loads custom.el for custom variables and specific configuration modules
 
+;;; Code:
+
+;;;; Load Path Setup
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'load-path "~/.emacs.d/init")
-(load "init-proxy" t)
 
+;;;; Load Custom Variables
+(setq custom-file "~/.emacs.d/custom.el")
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+;;;; Proxy Configuration
+(condition-case nil
+    (load "init-proxy" t)
+  (error (message "Warning: init-proxy not found")))
+
+;;;; UI Configuration
 (display-time)
-(if (window-system)
-    (tool-bar-mode 0))
-(unless (window-system)
-  (menu-bar-mode 0))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("dea4b7d43d646aa06a4f705a58f874ec706f896c25993fcf73de406e27dc65ba" "76c5b2592c62f6b48923c00f97f74bcb7ddb741618283bdb2be35f3c0e1030e3" "ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "2022c5a92bbc261e045ec053aa466705999863f14b84c012a43f55a95bf9feb8" default))
- '(js-indent-level 2)
- '(package-selected-packages
-   '(flycheck-rust rust-mode fsharp-mode groovy-mode terraform-mode elm-mode graphql-mode tide docker-compose-mode presentation presentation-mode company-go company flycheck org-bullets yaml-mode speed-type image+ web-mode neotree diminish ace-window helm-descbinds helm-flx helm-config haml-mode cider clojure-mode paredit yasnippet js2-mode zenburn-theme use-package typing twittering-mode rainbow-delimiters markdown-mode magit lfe-mode helm haskell-mode go-mode dockerfile-mode company-statistics coffee-mode clojurescript-mode clj-refactor ac-cider))
- '(yas-trigger-key "TAB"))
-
-;; Package
-(require 'init-package)
-
-(use-package no-littering :ensure t)
-(use-package linum-off :ensure t)
-(use-package nlinum :ensure t :after linum-off
-  :config
-  (advice-add 'nlinum-mode :around
-              (lambda (orig-f &rest args)
-                (unless (or (minibufferp)
-                            (or
-                             (eq major-mode 'treemacs-mode)
-                             (memq major-mode linum-disabled-modes-list))
-                            (string-match "*" (buffer-name)))
-                  (apply orig-f args))))
-  (custom-set-faces '(linum ((t :height 0.9))))
-  (global-nlinum-mode))
-
 (column-number-mode t)
 
-(require 'init-locales)
-(require 'init-mozc)
+;; Conditional UI elements based on display type
+(when (display-graphic-p)
+  (tool-bar-mode -1))
+(unless (display-graphic-p)
+  (menu-bar-mode -1))
 
+;;;; Package System
+(condition-case nil
+    (require 'init-package)
+  (error (message "Error: init-package not found")))
+
+;;;; Essential Packages
+(use-package no-littering :ensure t)
+
+;;;; Input Method
+(condition-case nil
+    (require 'init-mozc)
+  (error (message "Warning: init-mozc not found")))
+
+;;;; Theme
 (use-package zenburn-theme
   :ensure t
   :config
-  (load-theme 'zenburn))
+  (load-theme 'zenburn t))
 
-(when (eq window-system 'w32)
-  (require 'init-w32))
+;;;; Platform-specific Configuration
+(when (eq system-type 'windows-nt)
+  (condition-case nil
+      (require 'init-w32)
+    (error (message "Warning: init-w32 not found"))))
 
-;; Hide startup message
-(setq inhibit-startup-message t)
+;;;; Core Editor Settings
+;; File handling
+(setq auto-compression-mode t
+      make-backup-files nil
+      vc-follow-symlinks t)
 
-;; Enable to read compressed files.
-(auto-compression-mode t)
-
-;; Ctrl+H
-(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
-
-;; Delete trailing whitespaces before a file will be saved.
+;; Editing behavior
+(setq-default indent-tabs-mode nil)
+(fset 'yes-or-no-p 'y-or-n-p)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; No backup file
-(setq make-backup-files nil)
-
-;;; Indent settings
-(setq-default indent-tabs-mode nil)
-
-;; yes or no -> y or n
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; follow symlinks
-(setq vc-follow-symlinks t)
-
-;; Reload updated file automatically
+;; Auto-revert files when changed externally
 (global-auto-revert-mode 1)
 
-;;; Recentf
+;; Key bindings
+(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+
+;;;; Built-in Enhancements
+;; Line numbers for programming
+(use-package display-line-numbers
+  :hook ((prog-mode text-mode) . display-line-numbers-mode)
+  :config
+  (setq display-line-numbers-type t
+        display-line-numbers-width-start t)
+  (set-face-attribute 'line-number nil :height 0.9)
+  (set-face-attribute 'line-number-current-line nil :height 0.9))
+
+;; Recent files
 (use-package recentf
   :config
   (setq recentf-max-saved-items 1000
         recentf-max-menu-items 15
-        recentf-auto-cleanup 'never)
+        recentf-auto-cleanup 'never
+        recentf-exclude '("/tmp/" "/ssh:" "/sudo:"))
   (recentf-mode +1))
 
-;;; paren mode
+;; Session management
+(use-package savehist
+  :config
+  (setq savehist-additional-variables '(search-ring regexp-search-ring))
+  (savehist-mode 1))
+
+(use-package saveplace
+  :config
+  (save-place-mode 1))
+
+;; Parentheses matching
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
 (set-face-attribute 'show-paren-match nil
   :background "gray10" :foreground "SkyBlue"
   :underline nil)
 
-;;;
-(use-package speed-type :ensure t)
-
-;;; Buffer name
-(require 'uniquify)
+;; Buffer naming
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-(require 'init-diminish)
-(require 'init-neotree)
-(require 'init-helm)
-(require 'init-presentation)
+;; Smooth scrolling (Emacs 29+)
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
 
-;;;
-;;; Major mode
-;;;
-(require 'init-web)
-(require 'init-javascript)
-(require 'init-ruby)
-(require 'init-clojure)
-(require 'init-golang)
-(require 'init-rust)
-(require 'init-elm)
-(require 'init-fsharp)
-;(require 'init-java)
-(require 'init-groovy)
-(require 'init-haml)
-(require 'init-markdown)
+;;;; Utility Packages
+(use-package speed-type :ensure t :defer t)
+
+;;;; UI Enhancement Modules
+(condition-case nil
+    (require 'init-diminish)
+  (error (message "Warning: init-diminish not found")))
+
+(condition-case nil
+    (require 'init-neotree)
+  (error (message "Warning: init-neotree not found")))
+
+(condition-case nil
+    (require 'init-helm)
+  (error (message "Warning: init-helm not found")))
+
+(condition-case nil
+    (require 'init-presentation)
+  (error (message "Warning: init-presentation not found")))
+
+;;;; Major Mode Configurations
+(condition-case nil (require 'init-web) (error nil))
+(condition-case nil (require 'init-javascript) (error nil))
+(condition-case nil (require 'init-java) (error nil))
+(condition-case nil (require 'init-ruby) (error nil))
+(condition-case nil (require 'init-clojure) (error nil))
+(condition-case nil (require 'init-golang) (error nil))
+(condition-case nil (require 'init-rust) (error nil))
+(condition-case nil (require 'init-elm) (error nil))
+(condition-case nil (require 'init-fsharp) (error nil))
+(condition-case nil (require 'init-groovy) (error nil))
+(condition-case nil (require 'init-haml) (error nil))
+(condition-case nil (require 'init-markdown) (error nil))
+(condition-case nil (require 'init-org) (error nil))
+(condition-case nil (require 'init-docker) (error nil))
+
+;; YAML mode
 (use-package yaml-mode
   :ensure t
   :mode "\\.ya?ml\\'")
-(require 'init-org)
-(require 'init-docker)
 
-;;; Minor mode
-;;;
-(require 'init-flymake)
-(require 'init-autocomplete)
-(require 'init-yasnippet)
-(require 'init-paredit)
-(use-package magit
-  :ensure t)
+;;;; Minor Mode Configurations
+(condition-case nil (require 'init-lsp) (error nil))
+(condition-case nil (require 'init-flymake) (error nil))
+(condition-case nil (require 'init-autocomplete) (error nil))
+(condition-case nil (require 'init-yasnippet) (error nil))
+(condition-case nil (require 'init-paredit) (error nil))
+;;;; Additional Packages
+;; Compatibility layer for packages
+(use-package compat
+  :ensure t
+  :demand t)
 
-;;; Image
+;; Image enhancement
 (use-package image+
   :ensure t
-  :after 'image-mode
-  :init (add-hook 'image-mode-hook '(lambda () (require 'image+)))
+  :after image-mode
+  :init (add-hook 'image-mode-hook (lambda () (require 'image+)))
   :config (bind-keys :map image-mode-map
              ("0" . imagex-sticky-restore-original)
              ("+" . imagex-sticky-maximize)
              ("=" . imagex-sticky-zoom-in)
              ("-" . imagex-sticky-zoom-out)))
 
-;;; Terraform
+;; Claude Code integration
+(use-package claude-code
+  :ensure t
+  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :config (claude-code-mode)
+  :bind-keymap ("C-c c" . claude-code-command-map))
+
+;; Terraform support
 (use-package terraform-mode
   :ensure t
-  :mode (("\\.tf\\'" . terraform-mode))
-  )
+  :mode "\\.tf\\'")
 
-;; Keybind
+;;;; Key Bindings
 (bind-key "<next>" #'scroll-up-line)
 (bind-key "<prior>" #'scroll-down-line)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(linum ((t :height 0.9))))
 ;;; init.el ends here

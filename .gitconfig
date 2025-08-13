@@ -17,3 +17,5 @@
 	helper = /usr/share/git/credential/netrc/git-credential-netrc
 [init]
 	defaultBranch = main
+[core]
+	autocrlf = input

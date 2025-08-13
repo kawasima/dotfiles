@@ -13,3 +13,4 @@
 .emacs.d/eshell
 .emacs.d/init/init-proxy.el
 \#*
+.DS_Store

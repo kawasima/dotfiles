@@ -54,14 +54,13 @@ function select-history() {
 zle -N select-history
 bindkey '^r' select-history
 
-# fd - cd to selected directory
-function fd() {
+# fcd - cd to selected directory
+function fcd() {
     local dir
     dir=$(find ${1:-.} -path '*/\.*' -prune \
                -o -type d -print 2> /dev/null | fzf-tmux +m) && \
         cd "$dir"
 }
-
 
 # fkill - kill process
 function fkill() {

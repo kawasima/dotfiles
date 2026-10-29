@@ -2,7 +2,7 @@
 	email = kawasima1016@gmail.com
 	name = kawasima
 [push]
-	default = matching
+	default = simple
 [alias]
 	st = status
 	ci = commit
@@ -13,9 +13,15 @@
 
 [url "https://"]
 	instedOf = git://
-[credential]
-	helper = /usr/share/git/credential/netrc/git-credential-netrc
+[include]
+	path = .gitconfig.local
 [init]
 	defaultBranch = main
 [core]
 	autocrlf = input
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential

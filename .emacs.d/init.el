@@ -38,10 +38,22 @@
 ;;;; Essential Packages
 (use-package no-littering :ensure t)
 
+;; Compatibility layer for packages (load early)
+(use-package compat
+  :ensure t
+  :demand t)
+
+(defun init--require-silent (feature)
+  "Require FEATURE, warning if it is missing or fails to load."
+  (if (locate-library (symbol-name feature))
+      (condition-case err
+          (require feature)
+        (error (message "Warning: %s failed to load: %s"
+                        feature (error-message-string err))))
+    (message "Warning: %s not found" feature)))
+
 ;;;; Input Method
-(condition-case nil
-    (require 'init-mozc)
-  (error (message "Warning: init-mozc not found")))
+(init--require-silent 'init-mozc)
 
 ;;;; Theme
 (use-package zenburn-theme
@@ -51,9 +63,7 @@
 
 ;;;; Platform-specific Configuration
 (when (eq system-type 'windows-nt)
-  (condition-case nil
-      (require 'init-w32)
-    (error (message "Warning: init-w32 not found"))))
+  (init--require-silent 'init-w32))
 
 ;;;; Core Editor Settings
 ;; File handling
@@ -63,11 +73,15 @@
 
 ;; Editing behavior
 (setq-default indent-tabs-mode nil)
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Auto-revert files when changed externally
-(global-auto-revert-mode 1)
+(use-package autorevert
+  :config
+  (setq auto-revert-verbose nil
+        global-auto-revert-non-file-buffers t)
+  (global-auto-revert-mode 1))
 
 ;; Key bindings
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
@@ -119,37 +133,19 @@
 (use-package speed-type :ensure t :defer t)
 
 ;;;; UI Enhancement Modules
-(condition-case nil
-    (require 'init-diminish)
-  (error (message "Warning: init-diminish not found")))
+(init--require-silent 'init-diminish)
 
-(condition-case nil
-    (require 'init-neotree)
-  (error (message "Warning: init-neotree not found")))
+(init--require-silent 'init-neotree)
 
-(condition-case nil
-    (require 'init-helm)
-  (error (message "Warning: init-helm not found")))
+(init--require-silent 'init-helm)
 
-(condition-case nil
-    (require 'init-presentation)
-  (error (message "Warning: init-presentation not found")))
+(init--require-silent 'init-presentation)
 
 ;;;; Major Mode Configurations
-(condition-case nil (require 'init-web) (error nil))
-(condition-case nil (require 'init-javascript) (error nil))
-(condition-case nil (require 'init-java) (error nil))
-(condition-case nil (require 'init-ruby) (error nil))
-(condition-case nil (require 'init-clojure) (error nil))
-(condition-case nil (require 'init-golang) (error nil))
-(condition-case nil (require 'init-rust) (error nil))
-(condition-case nil (require 'init-elm) (error nil))
-(condition-case nil (require 'init-fsharp) (error nil))
-(condition-case nil (require 'init-groovy) (error nil))
-(condition-case nil (require 'init-haml) (error nil))
-(condition-case nil (require 'init-markdown) (error nil))
-(condition-case nil (require 'init-org) (error nil))
-(condition-case nil (require 'init-docker) (error nil))
+(dolist (module '(init-web init-javascript init-java init-ruby init-clojure
+                  init-golang init-rust init-elm init-fsharp init-groovy
+                  init-haml init-markdown init-org init-docker))
+  (init--require-silent module))
 
 ;; YAML mode
 (use-package yaml-mode
@@ -157,16 +153,10 @@
   :mode "\\.ya?ml\\'")
 
 ;;;; Minor Mode Configurations
-(condition-case nil (require 'init-lsp) (error nil))
-(condition-case nil (require 'init-flymake) (error nil))
-(condition-case nil (require 'init-autocomplete) (error nil))
-(condition-case nil (require 'init-yasnippet) (error nil))
-(condition-case nil (require 'init-paredit) (error nil))
+(dolist (module '(init-lsp init-flymake init-autocomplete init-yasnippet init-paredit))
+  (init--require-silent module))
+
 ;;;; Additional Packages
-;; Compatibility layer for packages
-(use-package compat
-  :ensure t
-  :demand t)
 
 ;; Image enhancement
 (use-package image+
